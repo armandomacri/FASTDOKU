@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="fastdoku:war">
+    <output-path>$PROJECT_DIR$/fastdoku/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>fastdoku</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="fastdoku-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="fastdoku:war exploded" />
+    </root>
+  </artifact>
+</component>

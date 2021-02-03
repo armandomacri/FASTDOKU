@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FASTDOKU.iml" filepath="$PROJECT_DIR$/FASTDOKU.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fastdoku/fastdoku.iml" filepath="$PROJECT_DIR$/fastdoku/fastdoku.iml" />
+    </modules>
+  </component>
+</project>
