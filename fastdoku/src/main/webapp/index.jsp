@@ -5,48 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>FASTDOKU</title>
 
-        <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet" type="text/css">
+        <link href="css/login.css" rel="stylesheet" type="text/css">
         <!--
         <link rel="icon" type="image/png" href="resources/images/icon.png"/>
         -->
     </head>
     <body>
-        <!--
         <h1>Welcome to FASTDOKU!</h1>
-
-        <div class="first_div">
-            <form action="access-servlet" class="form_style" method="post">
-
-                <div class="imgcontainer">
-                    <img src='resources/images/icon.png' alt="Icon not available" width="75%">
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <!-- Icon -->
+                <div class="fadeIn first">
+                    <div class="divImage"></div>
                 </div>
 
-                <div class="container">
-                    <label><b>Username</b></label>
-                    <label>
-                        <input type="text" class="inputWidth" placeholder="Enter Username" name="username" required>
-                    </label>
+                <!-- Login Form -->
+                <form action="access-servlet" class="formStyle" method="post">
+                    <label for="username"></label><input type="text" id="username" class="fadeIn second" placeholder="Enter Username" name="username" required>
+                    <label for="password"></label><input type="text" id="password" class="fadeIn third" placeholder="Enter Password" name="password" required>
+                    <input type="submit" class="fadeIn fourth" vame="loginButton" value="login">
+                </form>
 
-                    <label><b>Password</b></label>
-                    <label>
-                        <input type="password" class="inputWidth" placeholder="Enter Password" name="password" required>
-                    </label>
+                <!-- Remind Passowrd -->
+                <div id="formFooter">
+                    <a class="underlineHover" href="#">Sign Up</a>
+                </div>
 
-                    <button class="mainButton" type="submit" name="loginButton" value="login">Login</button>
-                    <button class="mainButton" type="submit" name="registerButton" value="register">Register</button>
-                </div>
-            </form>
-        </div>
-        -->
-        <div class="jumbotron">
-            <div class="container">
-                <span class="glyphicon glyphicon-list-alt"></span>
-                <h2>Calendar</h2>
-                <div class="box">
-                    <input type="text" placeholder="username">
-                    <input type="password" placeholder="password">
-                    <button class="btn btn-default full-width"><span class="glyphicon glyphicon-ok"></span></button>
-                </div>
             </div>
         </div>
     </body>
