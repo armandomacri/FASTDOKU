@@ -28,7 +28,7 @@
 
                 <!-- Remind Passowrd -->
                 <div id="formFooter">
-                    <a class="underlineHover" href="#">Sign Up</a>
+                    <a class="underlineHover" href="signUp.jsp">Sign Up</a>
                 </div>
 
             </div>
