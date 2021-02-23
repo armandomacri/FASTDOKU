@@ -1,4 +1,6 @@
 
+
+
 // Create WebSocket connection.
 let ws = new Object;
 if (!("WebSocket" in window)) {
@@ -17,6 +19,7 @@ function initWebSocket() {
     ws.onmessage = function(event) {
         console.log("Message received: "+ event.data);
     };
+
     ws.onclose = function() {
         console.log('Websocket closed');
     };
@@ -50,6 +53,7 @@ function sendWebSocket(message) {
 /**
  * Function used to close the web socket
  */
-function closeWebSocket () {
+
+window.onclose = function closeWebSocket () {
     ws.close();
 }

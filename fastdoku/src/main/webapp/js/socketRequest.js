@@ -10,10 +10,16 @@ class Request{
 }
 
 waitForSocketConnection(ws, registerUser);
+waitForSocketConnection(ws, addUserAmongOnlineOne);
 
 function registerUser () {
     var username = document.getElementById("loggedUsername").textContent;
     sendWebSocket(JSON.stringify(new Request(username, "", "register_me", "")));
+}
+
+function addUserAmongOnlineOne () {
+    var username = document.getElementById("loggedUsername").textContent;
+    sendWebSocket(JSON.stringify(new Request("", "", "add_online", "")));
 }
 
 ws.onmessage = function (event) {

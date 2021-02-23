@@ -204,7 +204,7 @@ td:nth-child(3n+1) {
     color: #333;
     background: #0000;
     padding: 15px 0 15px 22px;
-    letter-spacing: 1.1px;
+    letter-spacing: 1px;
     outline: none;
     border: none;
     width: 100%;

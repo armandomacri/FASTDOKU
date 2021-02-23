@@ -16,14 +16,11 @@
 </head>
 
 <body>
-
-    <%
-        String username = ((User)session.getAttribute("loggedUser")).getUsername();
-    %>
+    <%String username = ((User)session.getAttribute("loggedUser")).getUsername();%>
 
     <nav class="app-bar">
         <div class="bar-font title">Sudoku</div>
-        <div><%out.print(username);%></div>
+        <div class="bar-font" id="loggedUsername"><%out.print(username);%></div>
 
         <button id="pause-btn" onclick="pauseGameButtonClick()" class="button bar-button more-button">
             <span id="pause-icon" class="material-icons">pause</span>
@@ -333,7 +330,7 @@
         </div>
 
         <div class="card status">
-            <div id="game-number"><%out.print(username);%> <b>VS</b> <%out.print(request.getParameter("opponent"));%></div>
+            <div id="game-number"><%out.print(username);%> <b>VS</b> <span id="opponentUsername"><%out.print(request.getParameter("opponent"));%></span></div>
             <ul class="game-status">
                 <li>
                     <div class="vertical-adjust">
@@ -404,6 +401,7 @@
             </ul>
         </div>
     </div>
-    <script src="js/playGame.js" type="text/javascript"></script>
+    <script src="js/webSocket.js" type="text/javascript"></script>
+    <script src="js/play.js" type="text/javascript"></script>
 </body>
 </html>
