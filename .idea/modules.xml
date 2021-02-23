@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FASTDOKU.iml" filepath="$PROJECT_DIR$/FASTDOKU.iml" />
       <module fileurl="file://$PROJECT_DIR$/fastdoku/fastdoku.iml" filepath="$PROJECT_DIR$/fastdoku/fastdoku.iml" />
+      <module fileurl="file://$USER_HOME$/rebar3/webErlServer/webErlServer.iml" filepath="$USER_HOME$/rebar3/webErlServer/webErlServer.iml" />
     </modules>
   </component>
 </project>

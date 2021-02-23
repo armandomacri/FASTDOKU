@@ -1,10 +1,8 @@
-package it.unipi.dii.inginf.dsmt.fastdoku.fastdoku.persistence;
+package it.unipi.dii.inginf.dsmt.fastdoku.persistence;
 
-import it.unipi.dii.inginf.dsmt.fastdoku.fastdoku.Config;
-import it.unipi.dii.inginf.dsmt.fastdoku.fastdoku.User;
+import it.unipi.dii.inginf.dsmt.fastdoku.bean.User;
 import org.iq80.leveldb.DB;
 import org.iq80.leveldb.Options;
-import org.iq80.leveldb.WriteBatch;
 import java.io.File;
 import java.io.IOException;
 import static org.iq80.leveldb.impl.Iq80DBFactory.*;
@@ -14,119 +12,92 @@ import static org.iq80.leveldb.impl.Iq80DBFactory.bytes;
  * Class that contains the function used to interact with the Key-Value DB
  * Pattern of the keys: user:username:field
  */
-public class LevelDBManager {
-    private static volatile LevelDBManager instance; //Singleton instance
+public class LevelDBUser{
+    private static final String DB_PATH = "usersDB"; //usare parametri configurazione
+    private static volatile LevelDBUser instance; //Singleton instance
     private DB db;
-    private String pathDatabase;
-private LevelDBManager(){
-   this("example");
-}
-private LevelDBManager(String pathDatabase){
-    this.pathDatabase= pathDatabase;
-  //  openDB();
-}
 
-    public static LevelDBManager getInstance() {
-        if (instance == null)
-        {
-            synchronized (LevelDBManager.class)
-            {
+    private LevelDBUser() {}
+
+    public static LevelDBUser getInstance() {
+        if (instance == null) {
+            synchronized (LevelDBUser.class) {
                 if (instance == null)
-                {
-                    instance = new LevelDBManager();
-                }
+                    instance = new LevelDBUser();
             }
         }
         return instance;
     }
 
-    /*
+    /**
      * open the connection with LevelDB
      */
-    private void openDB()  {
+    private void openDB() {
 
         Options options = new Options();
         options.createIfMissing(true);
-        try{
-            db = factory.open(new File(pathDatabase), options);
-            System.out.println("ok6");
+        try {
+            db = factory.open(new File(DB_PATH), options);
         }
-        catch
-        (IOException ioe){
+        catch (IOException ioe){
             ioe.printStackTrace();
             closeDB();
         }
-
     }
 
-    /*
+    /**
      * close the connection with LevelDB
      */
-    public void closeDB() {
+    private void closeDB() {
         try {
-            if (db != null) {
+            if (db != null)
                 db.close();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     */
+    private void putValue (String key, String value) { db.put(bytes(key), bytes(value)); }
 
-    private void putValue (String key, String value)
-    {
-        db.put(bytes(key), bytes(value));
-    }
+    /**
+     *
+     * @param key
+     * @return
+     */
+    private String getValue (String key) { return asString(db.get(bytes(key))); }
 
-    private String getValue (String key)
-    {
-        return asString(db.get(bytes(key)));
-    }
+    /**
+     *
+     * @param key
+     */
+    private void deleteValue (String key) { db.delete(bytes(key)); }
 
-
-    private void deleteValue (String key)
-    {
-        db.delete(bytes(key));
-    }
-
-
-    private User checkUsername (final String username)
-    {
-
+    private User checkUsername (final String username) {
         User user = null;
         String password = getValue("user:" + username + ":password");
         // If this user is present in the DB
         if (password != null)
-        {
             user = new User(username, password);
-       /*     String value = getValue("user:" + username + ":ticTacToeWins");
-            if (value != null)
-                user.setTicTacToeWins(parseInt(value));
-            value = getValue("user:" + username + ":connectFourWins");
-            if (value != null)
-                user.setConnectFourWins(parseInt(value));*/
-        }
-
         return user;
     }
 
-
-    public User login(final String username, final String password)
-    {
+    public User login (final String username, final String password) {
         openDB();
         User user = checkUsername(username);
         // If doesn't exist a User registered with that username, or if the password doesn't match
         if (user == null || !user.getPassword().equals(password))
-        {
             return null;
-        }
         closeDB();
         return user;
     }
 
 
-    public  boolean isRegistered(final String username)
-    {
+    public boolean isRegistered(final String username) {
         openDB();
         boolean registered = false;
         String value = getValue("user:" + username + ":password");
@@ -134,17 +105,11 @@ private LevelDBManager(String pathDatabase){
             registered = true;
         closeDB();
         return registered;
-
     }
 
-
-    public  void signin(final String username, final String password)
-    {
-openDB();
-System.out.println("signin ok");
+    public void signin(final String username, final String password) {
+        openDB();
         putValue("user:" + username + ":password", password);
-        System.out.println("put ok");
-
         closeDB();
     }
 

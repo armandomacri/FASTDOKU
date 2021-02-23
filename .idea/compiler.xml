@@ -13,4 +13,7 @@
       <module name="fastdoku" target="1.8" />
     </bytecodeTargetLevel>
   </component>
+  <component name="ErlangCompilerOptions">
+    <useRebarCompiler>true</useRebarCompiler>
+  </component>
 </project>

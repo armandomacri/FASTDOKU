@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>FASTDOKU</title>
+        <title>Fastdoku</title>
 
         <link href="css/login.css" rel="stylesheet" type="text/css">
         <!--

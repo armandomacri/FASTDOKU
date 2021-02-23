@@ -36,7 +36,7 @@
             <label for="password"></label><input type="text" id="password" class="fadeIn third" placeholder="Enter Password" name="password" required>
             <label for="repeatpassword"></label><input type="text" id="repeatpassword" class="fadeIn third" placeholder="Repeat Password" name="repeatpassword" required>
 
-            <input type="submit" class="fadeIn fourth" name="loginButton" value="signUp">
+            <input type="submit" class="fadeIn fourth" name="signUp" value="signUp">
         </form>
 
         <!-- Remind Password -->

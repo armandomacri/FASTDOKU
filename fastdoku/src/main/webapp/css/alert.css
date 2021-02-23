@@ -1,0 +1,37 @@
+/* The alert message box */
+.fixed-horizontal-center {
+    position: fixed;
+    bottom: 0; /* or whatever top you need */
+    left: 50%;
+    width: auto;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+#alert {
+    opacity: 0;
+    padding: 20px;
+    background-color: green;
+    color: white;
+    transition: opacity 0.5s;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}

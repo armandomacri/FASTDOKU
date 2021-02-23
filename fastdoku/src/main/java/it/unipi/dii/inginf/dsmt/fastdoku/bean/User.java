@@ -1,4 +1,4 @@
-package it.unipi.dii.inginf.dsmt.fastdoku.fastdoku;
+package it.unipi.dii.inginf.dsmt.fastdoku.bean;
 
 public class User {
     private String username; // identifier

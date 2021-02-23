@@ -1,24 +1,19 @@
 package it.unipi.dii.inginf.dsmt.fastdoku.fastdoku;
 
-
-
-
-        import com.thoughtworks.xstream.XStream;
-
-        import org.w3c.dom.Document;
-        import org.xml.sax.SAXException;
-
-        import javax.xml.XMLConstants;
-        import javax.xml.parsers.DocumentBuilder;
-        import javax.xml.parsers.DocumentBuilderFactory;
-        import javax.xml.transform.dom.DOMSource;
-        import javax.xml.validation.Schema;
-        import javax.xml.validation.SchemaFactory;
-        import java.io.File;
-        import java.net.URISyntaxException;
-        import java.net.URL;
-        import java.nio.file.Files;
-        import java.nio.file.Paths;
+ import com.thoughtworks.xstream.XStream;
+ import org.w3c.dom.Document;
+ import org.xml.sax.SAXException;
+ import javax.xml.XMLConstants;
+ import javax.xml.parsers.DocumentBuilder;
+ import javax.xml.parsers.DocumentBuilderFactory;
+ import javax.xml.transform.dom.DOMSource;
+ import javax.xml.validation.Schema;
+ import javax.xml.validation.SchemaFactory;
+ import java.io.File;
+ import java.net.URISyntaxException;
+ import java.net.URL;
+ import java.nio.file.Files;
+ import java.nio.file.Paths;
 
 /**
  * Class used to store the configuration parameters retrieved from the config.xml
@@ -26,18 +21,13 @@ package it.unipi.dii.inginf.dsmt.fastdoku.fastdoku;
  */
 public class Config {
     public static volatile Config instance;
-    private String pathDatabase;
-    private int howManySecondsForEachTurn;
-    private int howManySkippedRoundsToStopTheGame;
-    private int howManyUsersToSeeInTheRanking;
+    public String pathDatabase;
+
 
     public static Config getInstance(){
-        if(instance == null)
-        {
-            synchronized (Config.class)
-            {
-                if(instance==null)
-                {
+        if(instance == null) {
+            synchronized (Config.class) {
+                if(instance==null) {
                     instance = readConfigurationParameters();
                 }
             }
@@ -54,14 +44,13 @@ public class Config {
             return new File(resource.toURI());
         }
     }
+
     /**
      * This function is used to read the config.xml file
      * @return  ConfigurationParameters instance
      */
-    private static Config readConfigurationParameters()
-    {
-        if (validConfigurationParameters())
-        {
+    private static Config readConfigurationParameters() {
+        if (validConfigurationParameters()) {
             XStream xs = new XStream();
 
             String text = null;
@@ -74,8 +63,7 @@ public class Config {
 
             return (Config) xs.fromXML(text);
         }
-        else
-        {
+        else {
             System.exit(1); //If i can't read the configuration file I can't continue with the program
         }
         return null;
@@ -85,18 +73,14 @@ public class Config {
      * This function is used to validate the config.xml with the config.xsd
      * @return  true if config.xml is well formatted, otherwise false
      */
-    private static boolean validConfigurationParameters()
-    {
-        try
-        {
+    private static boolean validConfigurationParameters() {
+        try {
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Document document = documentBuilder.parse(Config.getFileFromResource("config.xml"));
             Schema schema = schemaFactory.newSchema(Config.getFileFromResource("config.xsd"));
             schema.newValidator().validate(new DOMSource(document));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             if (e instanceof SAXException)
                 System.out.println("Validation Error: " + e.getMessage());
             else
@@ -105,21 +89,5 @@ public class Config {
             return false;
         }
         return true;
-    }
-
-    public String getPathDatabase() {
-        return pathDatabase;
-    }
-
-    public int getHowManySecondsForEachTurn() {
-        return howManySecondsForEachTurn;
-    }
-
-    public int getHowManySkippedRoundsToStopTheGame() {
-        return howManySkippedRoundsToStopTheGame;
-    }
-
-    public int getHowManyUsersToSeeInTheRanking() {
-        return howManyUsersToSeeInTheRanking;
     }
 }
