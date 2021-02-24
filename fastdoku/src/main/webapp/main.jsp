@@ -15,12 +15,14 @@
 <body>
     <script src="js/webSocket.js" type="text/javascript"></script>
     <script src="js/onlineUser.js" type="text/javascript"></script>
+    <%User user = (User)session.getAttribute("loggedUser");%>
 <!-- Navigation -->
     <header class="header">
         <a href="#" class="logo">FAST DOKU</a>
         <nav>
             <ul class="menu-items">
-                <li><a href="#" class="menu-item select" id="loggedUsername"><%String username = ((User)session.getAttribute("loggedUser")).getUsername();out.print(username);%></a></li>
+                <li><a href="#" class="menu-item select" id="loggedUsername"><%out.print(user.getUsername());%></a></li>
+                <li><a href="#" class="menu-item select"><%out.print(user.getPoints());%></a></li>
                 <li><a href="logout-servlet" class="menu-item">Log out</a></li>
             </ul>
         </nav>

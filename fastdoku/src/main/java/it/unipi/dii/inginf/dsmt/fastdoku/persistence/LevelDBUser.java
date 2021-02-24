@@ -58,7 +58,7 @@ public class LevelDBUser{
     }
 
     /**
-     *
+     * store the value 'value' corresponding to the key 'key'
      * @param key
      * @param value
      */
@@ -80,9 +80,16 @@ public class LevelDBUser{
     private User checkUsername (final String username) {
         User user = null;
         String password = getValue("user:" + username + ":password");
+        String points = getValue("user:" + username + ":points");
+
+        //controllo momentaneo per aggiungerlo agli utenti già iscritti
+        if (points == null){
+            putValue("user:" + username + ":points", "0");
+            points = "0";
+        }
         // If this user is present in the DB
         if (password != null)
-            user = new User(username, password);
+            user = new User(username, password, Integer.parseInt(points));
         return user;
     }
 
@@ -110,6 +117,7 @@ public class LevelDBUser{
     public void signin(final String username, final String password) {
         openDB();
         putValue("user:" + username + ":password", password);
+        putValue("user:" + username + ":points", "0");
         closeDB();
     }
 
