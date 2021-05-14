@@ -22,7 +22,7 @@ public class LogOutServlet extends HttpServlet {
         response.setContentType("text/html");
 
         request.getRequestDispatcher("index.jsp").include(request, response);
-        HttpSession session=request.getSession();
+        HttpSession session = request.getSession();
         session.invalidate();
     }
 }

@@ -20,8 +20,12 @@ function initWebSocket() {
         console.log("Message received: "+ event.data);
     };
 
+    /**
+     * Function used to close the web socket
+     */
     ws.onclose = function() {
         console.log('Websocket closed');
+        ws.close();
     };
 }
 
@@ -40,6 +44,11 @@ function waitForSocketConnection(socket, callback){
         }, 5); // wait 5 milisecond for the connection
 }
 
+ws.onerror = function(event) {
+    //console.error("WebSocket error observed:", event);
+    location.href = "./index.jsp?error=server unreachable, try later!";
+};
+
 
 /**
  * Function used to send a message with the web socket
@@ -50,10 +59,5 @@ function sendWebSocket(message) {
     console.log('Message sent');
 }
 
-/**
- * Function used to close the web socket
- */
 
-window.onclose = function closeWebSocket () {
-    ws.close();
-}
+

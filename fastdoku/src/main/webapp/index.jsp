@@ -1,17 +1,26 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: arman
+  Date: 07/02/2021
+  Time: 09:22
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Fastdoku</title>
-
         <link href="css/login.css" rel="stylesheet" type="text/css">
-        <!--
-        <link rel="icon" type="image/png" href="resources/images/icon.png"/>
-        -->
+        <link rel="icon" type="image/png" href="images/sudoku.png"/>
     </head>
     <body>
-        <h1>Welcome to FASTDOKU!</h1>
+        <%
+            if (request.getParameter("error") != null) {
+                out.print("<div style='text-align:center;'><h1 style='color:red;'>"+request.getParameter("error")+"</h1></div>");
+                request.removeAttribute("error");
+            }
+        %>
         <div class="wrapper fadeInDown">
             <div id="formContent">
                 <!-- Icon -->

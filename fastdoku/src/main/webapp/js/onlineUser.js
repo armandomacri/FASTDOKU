@@ -1,5 +1,5 @@
-function showDialogClick(dialogId, opponent) {
 
+function showDialogClick(dialogId, opponent) {
     var dialog = document.getElementById(dialogId);
     var dialogBox = document.getElementById(dialogId + "-box");
     document.getElementById("userToChallenge").innerHTML = opponent;
@@ -59,7 +59,6 @@ function startGameButtonClick() {
     gameId++;
     document.getElementById("game-number").innerText = "game #" + gameId;
 
-
     // hide solver buttons
     // show other buttons
     document.getElementById("moreoption-sec").style.display = "block";
@@ -73,12 +72,10 @@ function startGameButtonClick() {
     document.getElementById("timer").innerText = "00:00";
     document.getElementById("game-difficulty-label").innerText = "Game difficulty";
 
-
     document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
 
-     */
+    */
 }
-
 
 function hideDialogButtonClick(dialogId) {
     var dialog = document.getElementById(dialogId);

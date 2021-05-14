@@ -1,0 +1,109 @@
+.modal {
+    display: none;
+    position: fixed;
+    margin: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 15% auto;
+    width: 30%;
+    border-radius: 10px;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+.modal-header {
+    padding: 20px;
+    border-radius: 10px  10px 0 0;
+    background-color: green;
+    border-bottom: 1px black solid;
+    color: white;
+}
+
+.modal-header img{
+    -ms-transform: rotate(20deg);
+    transform: rotate(20deg);
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+
+.modal-header h2{
+    text-align: center;
+}
+
+.close {
+    float: right;
+    color: lightgray;
+    font-size: 24px;
+    font-weight: bold;
+
+}
+
+.close:hover {
+    color: darkgray;
+    cursor: pointer;
+}
+
+.modal-body img{
+    margin: auto;
+    padding: 15px;
+    display: block;
+}
+
+.modal-body h3{
+    text-align: center;
+}
+
+.modal-footer {
+    padding: 10px;
+    border-top: 1px black solid;
+}
+
+.modal-footer button{
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.btn-continue{
+    margin-left: 10px;
+    background: #363d4e;
+    color: #fff;
+}
+
+.btn-end{
+    border: 1px solid #363d4e;
+    color: #363d4e;
+}
+
+.btn-end:hover{
+    background: #363d4e;
+    color: #fff;
+}
+
+.btn-continue:hover{
+    background: #7b8d8f;
+}
+
+
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:50%; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}

@@ -11,6 +11,7 @@
     <title>Main Page</title>
     <link href="css/onlineuser.css" rel="stylesheet" type="text/css">
     <link href="css/alert.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
 <body>
     <script src="js/webSocket.js" type="text/javascript"></script>

@@ -21,7 +21,6 @@ function registerOpponent() {
     sendWebSocket(JSON.stringify(new Request("", "WebSocket", "register_opponent", opponent)));
 }
 
-
 ws.onmessage = function (event) {
     var jsonString = JSON.parse(event.data);
     var type = jsonString.type;
@@ -33,6 +32,10 @@ ws.onmessage = function (event) {
         case "opponent_disconnected":
             alert(text);
             location.href = "./main.jsp";
+            break;
+        case "surrender":
+            AjaxManager.updatePoints(1);
+            gameOn = false;
             break;
         default:
             break;

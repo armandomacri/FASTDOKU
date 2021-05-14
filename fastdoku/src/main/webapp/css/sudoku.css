@@ -61,15 +61,15 @@ td:nth-child(3n+1) {
 }
 
 .right-cell {
-    box-shadow: inset 0px 0px 20px 3px forestgreen;
+    box-shadow: inset 0 0 20px 3px forestgreen;
 }
 
 .wrong-cell {
-    box-shadow: inset 0px 0px 20px 3px tomato
+    box-shadow: inset 0 0 20px 3px tomato
 }
 
 .worning-cell {
-    box-shadow: inset 0px 0px 20px 3px goldenrod;
+    box-shadow: inset 0 0 20px 3px goldenrod;
 }
 
 /*Material Design*/
@@ -115,7 +115,11 @@ td:nth-child(3n+1) {
 .title {
     position: relative;
     float: left;
-    left: 18px;
+}
+
+.username {
+    position: relative;
+    float: left;
 }
 
 .more-button {
@@ -187,7 +191,7 @@ td:nth-child(3n+1) {
     bottom: 10px;
     margin-left: auto;
     margin-right: auto;
-    left: 0px;
+    left: 0;
     right: 0;
     font-size: 22px;
     display: block;
@@ -411,19 +415,6 @@ td:nth-child(3n+1) {
     z-index: 50;
     display: none;
     transition: all 0.2s;
-}
-
-.dialog-content {
-    top: -200px;
-    background: #fff;
-    width: 90%;
-    max-width: 540px;
-    height: fit-content;
-    margin: auto;
-    vertical-align: middle;
-    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14);
-    z-index: 51;
-    transition: all 0.5s;
 }
 
 .dialog-header {

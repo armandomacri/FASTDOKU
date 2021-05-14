@@ -580,7 +580,6 @@ function startGameButtonClick() {
 
     // hide solver buttons
     // show other buttons
-    document.getElementById("pause-btn").style.display = "block";
     document.getElementById("check-btn").style.display = "block";
     document.getElementById("isunique-btn").style.display = "none";
     document.getElementById("solve-btn").style.display = "none";
@@ -590,38 +589,15 @@ function startGameButtonClick() {
     document.getElementById("timer").innerText = "00:00";
     document.getElementById("game-difficulty-label").innerText = "Game difficulty";
 
-
     document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
-}
-
-// pause \ continue button click function
-function pauseGameButtonClick() {
-    var icon = document.getElementById("pause-icon");
-    var label = document.getElementById("pause-text");
-
-    // change icon and label of the button and hide or show the grid
-    if (pauseTimer) {
-        icon.innerText = "pause";
-        label.innerText = "Pause";
-        table.style.opacity = 1;
-    }
-    else {
-        icon.innerText = "play_arrow";
-        label.innerText = "Continue";
-        table.style.opacity = 0;
-    }
-
-    pauseTimer = !pauseTimer;
 }
 
 // check grid if correct
 function checkButtonClick() {
 
     // check if game is started
-    if (gameOn) {
 
         // add one minute to the stopwatch as a cost of grid's check
-        timer += 60;
         var currentGrid = [];
 
         // read gritd status
@@ -655,15 +631,22 @@ function checkButtonClick() {
         // if all values are correct and they equal original values then game over and the puzzle has been solved
         // if all values are correct and they aren't equal original values then game over but the puzzle has not been solved yet
         if (currects === 81) {
-            gameOn = false;
-            pauseTimer = true;
-            document.getElementById("game-difficulty").innerText = "Solved";
-            clearInterval(intervalId);
-            alert("Congrats, You solved it.");
+            if (gameOn) {
+                gameOn = false;
+                pauseTimer = true;
+                document.getElementById("game-difficulty").innerText = "Solved";
+                clearInterval(intervalId);
+                AjaxManager.updatePoints(2);
+            } else {
+                pauseTimer = true;
+                document.getElementById("game-difficulty").innerText = "Solved";
+                clearInterval(intervalId);
+            }
+
         } else if (errors === 0 && currects === 0) {
             alert("Congrats, You solved it, but this is not the solution that I want.");
         }
-    }
+
 }
 
 // surrender
@@ -687,6 +670,10 @@ function SurrenderButtonClick() {
 
         // mark game as solved
         document.getElementById("game-difficulty").innerText = "Solved";
+        var username = document.getElementById("loggedUsername").textContent;
+        var opponent = document.getElementById("opponentUsername").textContent;
+        sendWebSocket(JSON.stringify(new Request(username, opponent, "surrender", "")));
+        AjaxManager.updatePoints(-1);
     }
 }
 

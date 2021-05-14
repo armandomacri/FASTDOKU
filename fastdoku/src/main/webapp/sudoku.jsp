@@ -8,11 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Game</title>
     <link rel="stylesheet" href="css/sudoku.css">
+    <link rel="stylesheet" href="css/modalBox.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="js/sudoku.js"></script>
+    <script src="js/sudoku.js" type="text/javascript"></script>
+    <script src="js/ajaxManager.js" type="text/javascript"></script>
+    <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
 
 <body>
@@ -20,11 +23,11 @@
 
     <nav class="app-bar">
         <div class="bar-font title">Sudoku</div>
-        <div class="bar-font" id="loggedUsername"><%out.print(username);%></div>
+        <div class="bar-font title" id="loggedUsername"><%out.print(username);%></div>
 
-        <button id="pause-btn" onclick="pauseGameButtonClick()" class="button bar-button more-button">
-            <span id="pause-icon" class="material-icons">pause</span>
-            <span id="pause-text">Pause</span>
+        <button id="" onclick="SurrenderButtonClick()" class="button bar-button more-button">
+            <span class="material-icons">outlined_flag</span>
+            <span>Surrender</span>
         </button>
         <button id="check-btn" onclick="checkButtonClick()" class="button bar-button more-button">
             <span class="material-icons">done_all</span>
@@ -401,7 +404,32 @@
             </ul>
         </div>
     </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="hideModal();">&#10005;</span>
+                <h2>The game is over</h2>
+            </div>
+            <div class="modal-body">
+                <img id="endImg" alt="end">
+                <h3 id="result">you have gained / lost 1 point</h3>
+            </div>
+            <div class="modal-footer">
+                <div class="modal-footer-button">
+                    <button class="btn-continue" onclick="location.href ='./main.jsp'">Online user page ...</button>
+                    <!--
+                    <button class="btn-end" onclick="hideModal();">Ends the game</button>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/webSocket.js" type="text/javascript"></script>
     <script src="js/play.js" type="text/javascript"></script>
+    <script src="js/modalBox.js" type="text/javascript"></script>
 </body>
 </html>

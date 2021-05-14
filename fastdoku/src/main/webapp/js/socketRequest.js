@@ -14,12 +14,11 @@ waitForSocketConnection(ws, addUserAmongOnlineOne);
 
 function registerUser () {
     var username = document.getElementById("loggedUsername").textContent;
-    sendWebSocket(JSON.stringify(new Request(username, "", "register_me", "")));
+    sendWebSocket(JSON.stringify(new Request(username, "WebSocket", "register_me", "")));
 }
 
 function addUserAmongOnlineOne () {
-    var username = document.getElementById("loggedUsername").textContent;
-    sendWebSocket(JSON.stringify(new Request("", "", "add_online", "")));
+    sendWebSocket(JSON.stringify(new Request("", "WebSocket", "add_online", "")));
 }
 
 ws.onmessage = function (event) {
@@ -59,6 +58,7 @@ ws.onmessage = function (event) {
 
         case "error":
             alert(text);
+            location.href = "./logout-servlet";
             break;
 
         case "play_start":

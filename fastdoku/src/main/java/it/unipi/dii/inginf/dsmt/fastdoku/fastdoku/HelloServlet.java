@@ -49,15 +49,15 @@ public class HelloServlet extends HttpServlet {
         else { // If the user has required a register operation
             if (password.equals(repeatpassword)){
                 if (levelDBUser.isRegistered(username)){ //The username is already in use
-                    out.print("Sorry, the username is already in use!");
-                    Metod.goToPage("index.jsp", request, response);
+                    session.setAttribute("error", "Sorry, the username is already in use!");
+                    Metod.goToPage("signUp.jsp", request, response);
                 } else if (Pattern.matches("^[a-zA-Z0-9_.]*$", username)) { //If the username is correctly formatted
                     levelDBUser.signin(username, password);
                     session.setAttribute("loggedUser", new User(username, password));
                     goToPage("main.jsp", request, response);
               } else {
-                    out.print("Username not valid! Please use alphanumeric chars, underscore and dot");
-                    goToPage("main.jsp", request, response);
+                    session.setAttribute("error", "Username not valid! Please use alphanumeric chars, underscore and dot.");
+                    goToPage("signUp.jsp", request, response);
                 }
             }
         }
