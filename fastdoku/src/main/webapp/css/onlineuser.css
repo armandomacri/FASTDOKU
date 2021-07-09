@@ -7,15 +7,11 @@ body {
 
 /****************NAV BAR************************/
 .header {
-    background: #122331;
-    position: relative;
-    max-width: 80vw;
-    margin: auto;
+    background: #56baed;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    z-index: 1;
 }
 .header a {
     text-decoration: none;
@@ -24,9 +20,16 @@ body {
 .header ul {
     list-style: none;
 }
-.logo {
+.header .logo {
     font-size: 2rem;
+    color: white;
 }
+
+.header img {
+    width: 10%;
+
+}
+
 .menu-items {
     display: flex;
     align-items: center;
@@ -37,11 +40,13 @@ body {
 }
 
 .menu-items .select{
-    background-color: #ff652f;
     cursor: default;
+    color: white;
+    display: flex;
+    align-items: center;
 }
 
-.menu-items li:hover {
+.menu-items .log-out:hover {
     background-color: #ff652f;
 }
 /**********************************************************************************/
@@ -130,6 +135,15 @@ h2 small {
 }
 
 .table-row .requestButton {
+    border: none;
+    background-color: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    color: green;
+}
+
+.table-row .acceptButton {
     border: none;
     background-color: inherit;
     font-size: 16px;

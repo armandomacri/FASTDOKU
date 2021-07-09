@@ -10,6 +10,8 @@
 <head>
     <title>Main Page</title>
     <link href="css/onlineuser.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link href="css/alert.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
@@ -25,21 +27,28 @@
                 msg = "CONGRATS you have won " + points + " points";
             else
                 msg = "SORRY you have lost " + points + " points";
-            out.print("<script>" +
-                    "alert(" + msg +
-                    "</script>");
+            out.print("<script type='text/javascript'>" + "alert(" + msg + ")</script>");
             request.removeAttribute("points");
         }
-
     %>
     <!-- Navigation -->
     <header class="header">
-        <a href="#" class="logo">FAST DOKU</a>
+        <div class="logo"><span>FASTDOKU</span></div>
         <nav>
             <ul class="menu-items">
-                <li><a href="#" class="menu-item select" id="loggedUsername"><%out.print(user.getUsername());%></a></li>
-                <li><a href="#" class="menu-item select"><%out.print(user.getPoints());%></a></li>
-                <li><a href="logout-servlet" class="menu-item">Log out</a></li>
+                <li>
+                    <div class="menu-item select" >
+                        <span class="material-icons">account_circle</span>
+                        <span id="loggedUsername" style="margin-left: 5px"><%out.print(user.getUsername());%></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-item select">
+                        <span class="material-icons">emoji_events</span>
+                        <span style="margin-left: 5px"><%out.print(user.getPoints());%></span>
+                    </div>
+                </li>
+                <li class="log-out"><a href="logout-servlet" class="menu-item">Log out</a></li>
             </ul>
         </nav>
     </header>

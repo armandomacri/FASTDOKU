@@ -32,7 +32,7 @@
                 <form action="access-servlet" class="formStyle" method="post">
                     <label for="username"></label><input type="text" id="username" class="fadeIn second" placeholder="Enter Username" name="username" required>
                     <label for="password"></label><input type="text" id="password" class="fadeIn third" placeholder="Enter Password" name="password" required>
-                    <input type="submit" class="fadeIn fourth" name="signIn" value="signIn">
+                    <input type="submit" class="fadeIn fourth" name="logIn" value="logIn">
                 </form>
 
                 <!-- Remind Passowrd -->

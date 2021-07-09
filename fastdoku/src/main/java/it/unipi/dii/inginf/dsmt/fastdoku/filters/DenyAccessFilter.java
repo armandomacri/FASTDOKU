@@ -29,18 +29,20 @@ public class DenyAccessFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        PrintWriter out = response.getWriter();
+
 
         HttpSession session = request.getSession();
         if (session.getAttribute("loggedUser") != null)
             chain.doFilter(req, resp);
         else {
+            PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Invalid access!');");
             out.println("document.location.href='./index.jsp';"); // forced logout
             out.println("</script>");
+            out.close();
         }
-        out.close();
+
     }
 
     public void destroy() {

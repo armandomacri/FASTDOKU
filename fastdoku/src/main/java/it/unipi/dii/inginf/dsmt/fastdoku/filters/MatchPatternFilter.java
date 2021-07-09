@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
  * username and password match some patterns.
  * It is sufficient that only one of the pattern
  * is not match to prevent registration.
+ * Moreover this filter avoid forced access
+ * to the servlet
  */
 @WebFilter(
         filterName = "MatchPatternFilter",
@@ -56,7 +58,7 @@ public class MatchPatternFilter implements Filter {
             } else {
                 chain.doFilter(req, resp);
             }
-        } else if(request.getParameter("signIn") == null) {
+        } else if(request.getParameter("logIn") == null) {
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Access Denied! If you want to continue log in.');");
             out.println("document.location.href='./index.jsp';");

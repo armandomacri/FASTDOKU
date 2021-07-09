@@ -32,7 +32,7 @@ public class AccessServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         //login
-        if (request.getParameter("signIn") != null) {
+        if (request.getParameter("logIn") != null) {
 
             User user = levelDBUser.login(username, password);
             if (user != null) {

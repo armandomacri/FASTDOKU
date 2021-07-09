@@ -50,6 +50,7 @@ function startGameButtonClick() {
         if (!buttons[i].disabled && buttons[i].click){
             buttons[i].disabled = true;
             buttons[i].textContent = "Request Pending";
+            buttons[i].style.cursor = "default";
             buttons[i].style.color = "gray";
             break;
         }

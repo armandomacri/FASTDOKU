@@ -3,7 +3,7 @@ https://bootsnipp.com/snippets/dldxB
  */
 
 html {
-    background-color: #122331;
+    background-color: #56baed;
 }
 
 body {
@@ -36,15 +36,12 @@ h1 {
 .divImage{
     display: inline-block;
     background-image: url("../images/sudoku.png");
-    background-size: 90px 90px;
+    background-size: 100px 100px;
     width: 120px;
-    height: 120px;
+    height: 140px;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: #122331;
     border-radius: 50%;
-    position: relative;
-    top: -50px;
 }
 
 /* STRUCTURE */
