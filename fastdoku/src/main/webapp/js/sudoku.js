@@ -581,8 +581,6 @@ function startGameButtonClick() {
     // hide solver buttons
     // show other buttons
     document.getElementById("check-btn").style.display = "block";
-    document.getElementById("isunique-btn").style.display = "none";
-    document.getElementById("solve-btn").style.display = "none";
 
     // prerpare view for new game
     document.getElementById("timer-label").innerText = "Time";
@@ -634,9 +632,37 @@ function checkButtonClick() {
             if (gameOn) {
                 gameOn = false;
                 pauseTimer = true;
+                var difficulty = document.getElementById("game-difficulty").innerText;
                 document.getElementById("game-difficulty").innerText = "Solved";
                 clearInterval(intervalId);
-                AjaxManager.updatePoints(2);
+                var username = document.getElementById("loggedUsername").textContent;
+                var opponent = document.getElementById("opponentUsername").textContent;
+                var time = parseInt(document.getElementById("timer").textContent);
+                var points = 0;
+
+                difficulty = difficulty.toLowerCase()
+                if (difficulty == "expert") {
+                    difficulty = 5;
+                } else if(difficulty == "hard") {
+                    difficulty = 4;
+                } else if(difficulty == "normal") {
+                    difficulty = 3;
+                } else if(difficulty == "easy") {
+                    difficulty = 2;
+                } else {
+                    difficulty = 1;
+                }
+                alert(difficulty + "   " + time)
+                //5 max points
+                if (time < 5) {
+                    points = (6 - time) * difficulty;
+                }
+                else {
+                    points = 1;
+                }
+
+                sendWebSocket(JSON.stringify(new Request(username, opponent, "win", points)));
+                location.href = "./update-servlet?points="+points;
             } else {
                 pauseTimer = true;
                 document.getElementById("game-difficulty").innerText = "Solved";
@@ -669,11 +695,11 @@ function SurrenderButtonClick() {
         clearInterval(intervalId);
 
         // mark game as solved
-        document.getElementById("game-difficulty").innerText = "Solved";
+        //document.getElementById("game-difficulty").innerText = "Solved";
         var username = document.getElementById("loggedUsername").textContent;
         var opponent = document.getElementById("opponentUsername").textContent;
         sendWebSocket(JSON.stringify(new Request(username, opponent, "surrender", "")));
-        AjaxManager.updatePoints(-1);
+        location.href = "./update-servlet?points=-1";
     }
 }
 
@@ -768,7 +794,7 @@ function sudokuSolverMenuClick() {
 function solveButtonClick() {
 
     if (gameOn) {
-        gameOn = false;
+        //gameOn = false;
         clearInterval(intervalId);
     }
 
@@ -784,7 +810,7 @@ function solveButtonClick() {
             alert("This grid can't be solved because of an invalid input")
             break;
         case 3:
-            alert("this grid has no solution");
+            alert("This grid has no solution");
             break;
     }
 }

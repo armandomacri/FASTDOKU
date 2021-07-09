@@ -54,27 +54,6 @@ function startGameButtonClick() {
             break;
         }
     }
-
-    /*
-    gameId++;
-    document.getElementById("game-number").innerText = "game #" + gameId;
-
-    // hide solver buttons
-    // show other buttons
-    document.getElementById("moreoption-sec").style.display = "block";
-    document.getElementById("pause-btn").style.display = "block";
-    document.getElementById("check-btn").style.display = "block";
-    document.getElementById("isunique-btn").style.display = "none";
-    document.getElementById("solve-btn").style.display = "none";
-
-    // prerpare view for new game
-    document.getElementById("timer-label").innerText = "Time";
-    document.getElementById("timer").innerText = "00:00";
-    document.getElementById("game-difficulty-label").innerText = "Game difficulty";
-
-    document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
-
-    */
 }
 
 function hideDialogButtonClick(dialogId) {

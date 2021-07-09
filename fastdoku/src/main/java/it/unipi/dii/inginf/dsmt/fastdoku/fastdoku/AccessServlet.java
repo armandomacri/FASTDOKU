@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.util.regex.Pattern;
 
 @WebServlet(name = "accessServlet", value = "/access-servlet")
-public class HelloServlet extends HttpServlet {
+public class AccessServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest (request, response);
@@ -26,15 +26,13 @@ public class HelloServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String repeatpassword = request.getParameter("repeatpassword");
         LevelDBUser levelDBUser = LevelDBUser.getInstance();
         HttpSession session = request.getSession();
 
         //login
-        if (request.getParameter("loginButton") != null) {
+        if (request.getParameter("signIn") != null) {
 
             User user = levelDBUser.login(username, password);
             if (user != null) {
@@ -42,23 +40,22 @@ public class HelloServlet extends HttpServlet {
                 goToPage("main.jsp", request, response);
             }
             else {
-                out.print("Username or password wrong");
+                session.setAttribute("error", "Username or password wrong");
                 goToPage("index.jsp", request, response);
             }
         }
         else { // If the user has required a register operation
-            if (password.equals(repeatpassword)){
-                if (levelDBUser.isRegistered(username)){ //The username is already in use
-                    session.setAttribute("error", "Sorry, the username is already in use!");
-                    Metod.goToPage("signUp.jsp", request, response);
-                } else if (Pattern.matches("^[a-zA-Z0-9_.]*$", username)) { //If the username is correctly formatted
-                    levelDBUser.signin(username, password);
-                    session.setAttribute("loggedUser", new User(username, password));
-                    goToPage("main.jsp", request, response);
-              } else {
-                    session.setAttribute("error", "Username not valid! Please use alphanumeric chars, underscore and dot.");
-                    goToPage("signUp.jsp", request, response);
-                }
+            if (levelDBUser.isRegistered(username)){ //The username is already in use
+                PrintWriter out = response.getWriter();
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Username not valid! Username already in use.');");
+                out.println("document.location.href='./signUp.jsp';");
+                out.println("</script>");
+                out.close();
+            } else {
+                levelDBUser.signin(username, password);
+                session.setAttribute("loggedUser", new User(username, password));
+                goToPage("main.jsp", request, response);
             }
         }
     }

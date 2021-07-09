@@ -14,21 +14,31 @@ import static org.iq80.leveldb.impl.Iq80DBFactory.bytes;
  * Class that contains the function used to interact with the Key-Value DB
  * Pattern of the keys: user:username:field
  */
-public class LevelDBUser{
+public class LevelDBUser implements AutoCloseable {
     private static String DB_PATH; //usare parametri configurazione
+
+
     private static volatile LevelDBUser instance; //Singleton instance
     private DB db;
 
-    private LevelDBUser() {}
+    /**
+     * Private constructor
+     */
+    private LevelDBUser() {this("usersDB");}
     private LevelDBUser(final String path) {
         this.DB_PATH = path;
+        this.openDB();
     }
 
+    /**
+     * Singleton pattern
+     * @return return the unique istance 
+     */
     public static LevelDBUser getInstance() {
         if (instance == null) {
             synchronized (LevelDBUser.class) {
                 if (instance == null)
-                    instance = new LevelDBUser("usersDB");
+                    instance = new LevelDBUser();
             }
         }
         return instance;
@@ -38,16 +48,15 @@ public class LevelDBUser{
      * open the connection with LevelDB
      */
     private void openDB() {
-        synchronized (LevelDBUser.class){
-            Options options = new Options();
-            options.createIfMissing(true);
-            try {
-                db = factory.open(new File(DB_PATH), options);
-            }
-            catch (IOException ioe){
-                ioe.printStackTrace();
-                closeDB();
-            }
+
+        Options options = new Options();
+        options.createIfMissing(true);
+        try {
+            db = factory.open(new File(DB_PATH), options);
+        }
+        catch (IOException ioe) {
+            ioe.printStackTrace();
+            closeDB();
         }
     }
 
@@ -100,48 +109,43 @@ public class LevelDBUser{
     }
 
     public User login (final String username, final String password) {
-        openDB();
         User user = checkUsername(username);
         // If doesn't exist a User registered with that username, or if the password doesn't match
         if (user == null || !user.getPassword().equals(password))
             return null;
-        closeDB();
+
         return user;
     }
 
 
     public boolean isRegistered(final String username) {
-        openDB();
+
         boolean registered = false;
         String value = getValue("user:" + username + ":password");
         if (value != null)
             registered = true;
-        closeDB();
+
         return registered;
     }
 
     public void signin (final String username, final String password) {
-        openDB();
         WriteBatch batch = db.createWriteBatch();
         try {
             batch.put(bytes("user:" + username + ":password"), bytes(password));
             batch.put(bytes("user:" + username + ":points"), bytes("0"));
-
             db.write(batch);
             batch.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } finally {
-            // Make sure you close the batch to avoid resource leaks.
-            closeDB();
         }
-
     }
 
     public void updateScore (final String username, final int points) {
-        openDB();
         putValue("user:" + username + ":points", Integer.toString(points));
-        closeDB();
+    }
+
+    public void close(){
+        this.closeDB();
     }
 
 }

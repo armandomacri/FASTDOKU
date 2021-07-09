@@ -14,7 +14,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="js/sudoku.js" type="text/javascript"></script>
-    <script src="js/ajaxManager.js" type="text/javascript"></script>
     <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
 
@@ -22,7 +21,7 @@
     <%String username = ((User)session.getAttribute("loggedUser")).getUsername();%>
 
     <nav class="app-bar">
-        <div class="bar-font title">Sudoku</div>
+        <div class="bar-font title">FASTDOKU -> </div>
         <div class="bar-font title" id="loggedUsername"><%out.print(username);%></div>
 
         <button id="" onclick="SurrenderButtonClick()" class="button bar-button more-button">
@@ -33,6 +32,7 @@
             <span class="material-icons">done_all</span>
             <span>Check</span>
         </button>
+
         <button id="solve-btn" onclick="solveButtonClick()" class="button bar-button more-button">
             <span class="material-icons">border_color</span>
             <span>Solve</span>
@@ -333,7 +333,7 @@
         </div>
 
         <div class="card status">
-            <div id="game-number"><%out.print(username);%> <b>VS</b> <span id="opponentUsername"><%out.print(request.getParameter("opponent"));%></span></div>
+            <div id="game-number" style="text-align: center"><%out.print(username);%> <b>VS</b> <span id="opponentUsername"><%out.print(request.getParameter("opponent"));%></span></div>
             <ul class="game-status">
                 <li>
                     <div class="vertical-adjust">

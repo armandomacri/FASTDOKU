@@ -16,8 +16,23 @@
 <body>
     <script src="js/webSocket.js" type="text/javascript"></script>
     <script src="js/onlineUser.js" type="text/javascript"></script>
-    <%User user = (User)session.getAttribute("loggedUser");%>
-<!-- Navigation -->
+    <%
+        User user = (User)session.getAttribute("loggedUser");
+        if(request.getAttribute("points") != null){
+            int points = Integer.parseInt(request.getAttribute("points").toString());
+            String msg;
+            if (points > 0)
+                msg = "CONGRATS you have won " + points + " points";
+            else
+                msg = "SORRY you have lost " + points + " points";
+            out.print("<script>" +
+                    "alert(" + msg +
+                    "</script>");
+            request.removeAttribute("points");
+        }
+
+    %>
+    <!-- Navigation -->
     <header class="header">
         <a href="#" class="logo">FAST DOKU</a>
         <nav>

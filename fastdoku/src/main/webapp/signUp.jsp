@@ -15,12 +15,7 @@
     <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
 <body>
-    <%
-        if(session.getAttribute("error") != null){
-            out.print("<div style='text-align:center;'><h1 style='color:red;'>"+session.getAttribute("error").toString()+"</h1></div>");
-            session.removeAttribute("error");
-        }
-    %>
+
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <!-- Icon -->
@@ -36,7 +31,7 @@
                 <input type="submit" class="fadeIn fourth" name="signUp" value="signUp">
             </form>
             <div id="formFooter">
-                <a class="underlineHover" href="index.jsp">Login</a>
+                <a class="underlineHover" href="index.jsp">Sign In</a>
             </div>
         </div>
     </div>

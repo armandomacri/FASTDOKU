@@ -33,8 +33,10 @@ ws.onmessage = function (event) {
             alert(text);
             location.href = "./main.jsp";
             break;
+        case "lose":
+            alert(text);
+            location.href = "./update-servlet?points=-2";
         case "surrender":
-            AjaxManager.updatePoints(1);
             gameOn = false;
             break;
         default:
