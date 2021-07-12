@@ -3,6 +3,7 @@
 body {
     margin: 0;
     font-family: 'lato', sans-serif;
+    background-color: rgb(235, 235, 240);
 }
 
 /****************NAV BAR************************/
@@ -12,6 +13,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .14);
 }
 .header a {
     text-decoration: none;

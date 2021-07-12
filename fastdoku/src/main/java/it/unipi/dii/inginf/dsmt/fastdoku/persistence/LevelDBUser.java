@@ -144,6 +144,15 @@ public class LevelDBUser implements AutoCloseable {
         putValue("user:" + username + ":points", Integer.toString(points));
     }
 
+    public int getDaylyScore(final String username){
+        String p = getValue("user:"+username+":daylypoints");
+        return p != null ? Integer.parseInt(p) : 0;
+    }
+
+    public void setDaylyScore(final String username, final int points){
+        putValue("user:"+username+":daylypoints", Integer.toString(points));
+    }
+
     public void close(){
         this.closeDB();
     }

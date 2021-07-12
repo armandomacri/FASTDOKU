@@ -9,11 +9,11 @@ class Request{
 }
 
 waitForSocketConnection(ws, registerUser);
-waitForSocketConnection(ws, registerOpponent);
 
 function registerUser () {
     var username = document.getElementById("loggedUsername").textContent;
     sendWebSocket(JSON.stringify(new Request(username, "WebSocket", "register_me", "")));
+    waitForSocketConnection(ws, registerOpponent);
 }
 
 function registerOpponent() {
@@ -36,8 +36,11 @@ ws.onmessage = function (event) {
         case "lose":
             alert(text);
             location.href = "./update-servlet?points=-2";
+            break;
         case "surrender":
             gameOn = false;
+            alert(sender + " has given up!");
+            location.href = "./update-servlet?points=1";
             break;
         default:
             break;

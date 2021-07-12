@@ -554,6 +554,7 @@ window.onload = function () {
 // start new game
 function startGameButtonClick() {
     var difficulties = document.getElementById("game-difficulty").textContent;
+    difficulties = difficulties.toLowerCase();
     var difficulty = 5; //solved
 
     if (difficulties == "expert") {
@@ -587,7 +588,7 @@ function startGameButtonClick() {
     document.getElementById("timer").innerText = "00:00";
     document.getElementById("game-difficulty-label").innerText = "Game difficulty";
 
-    document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
+    //document.getElementById("game-difficulty").innerText = difficulty < difficulties.length ? difficulties[difficulty].value : "solved";
 }
 
 // check grid if correct
@@ -638,24 +639,30 @@ function checkButtonClick() {
                 var username = document.getElementById("loggedUsername").textContent;
                 var opponent = document.getElementById("opponentUsername").textContent;
                 var time = parseInt(document.getElementById("timer").textContent);
-                var points = 0;
-
+                var points;
+                var MAX_SCORE;
+                // difficulty:
+                //  5 expert
+                //  4 hard
+                //  3 normal
+                //  2 easy
+                //  1 very easy
                 difficulty = difficulty.toLowerCase()
                 if (difficulty == "expert") {
-                    difficulty = 5;
+                    MAX_SCORE = 5;
                 } else if(difficulty == "hard") {
-                    difficulty = 4;
+                    MAX_SCORE = 4;
                 } else if(difficulty == "normal") {
-                    difficulty = 3;
+                    MAX_SCORE = 3;
                 } else if(difficulty == "easy") {
-                    difficulty = 2;
+                    MAX_SCORE = 2;
                 } else {
-                    difficulty = 1;
+                    MAX_SCORE = 1;
                 }
-                alert(difficulty + "   " + time)
-                //5 max points
+
+                // max points
                 if (time < 5) {
-                    points = (6 - time) * difficulty;
+                    points = Math.round((MAX_SCORE+1) * MAX_SCORE*Math.random());
                 }
                 else {
                     points = 1;
@@ -672,7 +679,6 @@ function checkButtonClick() {
         } else if (errors === 0 && currects === 0) {
             alert("Congrats, You solved it, but this is not the solution that I want.");
         }
-
 }
 
 // surrender

@@ -75,7 +75,8 @@ td:nth-child(3n+1) {
 /*Material Design*/
 
 .app-bar {
-    background: #49599a;
+    /*
+    background: #56baed;
     width: 100%;
     position: fixed;
     height: 64px;
@@ -83,6 +84,14 @@ td:nth-child(3n+1) {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .14);
     z-index: 5;
     top: 0;
+
+     */
+    background: #56baed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .14);
 }
 
 .bar-button {
@@ -113,8 +122,8 @@ td:nth-child(3n+1) {
 }
 
 .title {
-    position: relative;
-    float: left;
+    color: white;
+    font-size: 2rem;
 }
 
 .username {
@@ -233,7 +242,7 @@ td:nth-child(3n+1) {
 .body {
     width: 95%;
     max-width: 800px;
-    margin: 96px auto 16px auto;
+    margin: 60px auto 16px auto;
     display: flex;
 }
 

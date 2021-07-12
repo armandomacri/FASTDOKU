@@ -15,22 +15,11 @@
     <link href="css/alert.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
-<body>
+<body onload="showPoints(<%out.println(session.getAttribute("earnedPoints"));%>)">
+
     <script src="js/webSocket.js" type="text/javascript"></script>
     <script src="js/onlineUser.js" type="text/javascript"></script>
-    <%
-        User user = (User)session.getAttribute("loggedUser");
-        if(request.getAttribute("points") != null){
-            int points = Integer.parseInt(request.getAttribute("points").toString());
-            String msg;
-            if (points > 0)
-                msg = "CONGRATS you have won " + points + " points";
-            else
-                msg = "SORRY you have lost " + points + " points";
-            out.print("<script type='text/javascript'>" + "alert(" + msg + ")</script>");
-            request.removeAttribute("points");
-        }
-    %>
+    <%User user = (User)session.getAttribute("loggedUser");%>
     <!-- Navigation -->
     <header class="header">
         <div class="logo"><span>FASTDOKU</span></div>
@@ -52,6 +41,7 @@
             </ul>
         </nav>
     </header>
+
     <div style="display: inline-flex; width: 100%">
         <div class="box">
             <div class="container">
@@ -68,7 +58,7 @@
 
         <div class="box">
             <div class="container">
-                <h2>Request <small>your request</small></h2>
+                <h2>Request <small>Request received</small></h2>
                 <ul class="responsive-table" id="requestRecived">
                     <li class="table-header">
                         <div class="col col-1">Username</div>
@@ -131,5 +121,21 @@
         </div>
     </div>
     <script src="js/socketRequest.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        function showPoints(p){
+
+            if (p != null) {
+                var msg = "";
+
+                if (p>0){
+                    msg = "CONGRATS! You have earned " + p + " points";
+                } else {
+                    msg = "SORRY! You have lost " + Math.abs(p) + " points";
+                }
+                alert(msg);
+            }
+        }
+    </script>
 </body>
 </html>

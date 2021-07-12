@@ -2,6 +2,8 @@ package it.unipi.dii.inginf.dsmt.fastdoku.fastdoku;
 
 import it.unipi.dii.inginf.dsmt.fastdoku.bean.User;
 import it.unipi.dii.inginf.dsmt.fastdoku.persistence.LevelDBUser;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,10 +31,17 @@ public class UpdatePointsServlet extends HttpServlet {
         int myPoints = points + user.getPoints();
         if (myPoints < 0)
             myPoints = 0;
-        levelDBUser.updateScore(user.getUsername(), points);
+        levelDBUser.updateScore(user.getUsername(), myPoints);
         user.setPoints(myPoints);
         session.setAttribute("loggedUser", user);
-        request.setAttribute("points", myPoints);
+        session.setAttribute("earnedPoints", points);
+
+        //for the ranking
+        int dailyPoints = levelDBUser.getDaylyScore(user.getUsername()) + points;
+        levelDBUser.setDaylyScore(user.getUsername(), dailyPoints);
+        /*-------------------------------------------------------------------*/
+
+        response.sendRedirect("main.jsp");
         goToPage("main.jsp", request, response);
     }
 
@@ -45,6 +54,8 @@ public class UpdatePointsServlet extends HttpServlet {
      * @throws IOException
      */
     private void goToPage (String page, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher(page).include(request, response);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+        if (requestDispatcher != null)
+            requestDispatcher.include(request, response);
     }
 }

@@ -16,14 +16,15 @@
     <script src="js/sudoku.js" type="text/javascript"></script>
     <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
-
 <body>
-    <%String username = ((User)session.getAttribute("loggedUser")).getUsername();%>
+    <%
+        String username = ((User)session.getAttribute("loggedUser")).getUsername();
+        String opponent = request.getParameter("opponent");
+        String difficulty = request.getParameter("difficulty");
+    %>
 
     <nav class="app-bar">
-        <div class="bar-font title">FASTDOKU -> </div>
-        <div class="bar-font title" id="loggedUsername"><%out.print(username);%></div>
-
+        <div class="bar-font title">FASTDOKU</div>
         <button id="" onclick="SurrenderButtonClick()" class="button bar-button more-button">
             <span class="material-icons">outlined_flag</span>
             <span>Surrender</span>
@@ -38,7 +39,6 @@
             <span>Solve</span>
         </button>
     </nav>
-
     <div class="body" id="sudoku">
         <div class="card game">
             <table id="puzzle-grid">
@@ -333,7 +333,7 @@
         </div>
 
         <div class="card status">
-            <div id="game-number" style="text-align: center"><%out.print(username);%> <b>VS</b> <span id="opponentUsername"><%out.print(request.getParameter("opponent"));%></span></div>
+            <div id="game-number" style="text-align: center"> <span id="loggedUsername"><%out.print(username);%></span> <b>VS</b> <span id="opponentUsername"><%out.print(opponent);%></span></div>
             <ul class="game-status">
                 <li>
                     <div class="vertical-adjust">
@@ -348,7 +348,7 @@
                         <span class="material-icons">network_check</span>
                         <span id="game-difficulty-label">Game difficulty</span>
                     </div>
-                    <div id="game-difficulty" class="timer" style="text-transform: uppercase;"><% out.print(request.getParameter("difficulty"));%></div>
+                    <div id="game-difficulty" class="timer" style="text-transform: uppercase;"><%out.print("<span>"+difficulty+"</span>");%></div>
                 </li>
                 <li>
                     <div class="vertical-adjust">
@@ -420,9 +420,6 @@
             <div class="modal-footer">
                 <div class="modal-footer-button">
                     <button class="btn-continue" onclick="location.href ='./main.jsp'">Online user page ...</button>
-                    <!--
-                    <button class="btn-end" onclick="hideModal();">Ends the game</button>
-                    -->
                 </div>
             </div>
         </div>
@@ -431,5 +428,13 @@
     <script src="js/webSocket.js" type="text/javascript"></script>
     <script src="js/play.js" type="text/javascript"></script>
     <script src="js/modalBox.js" type="text/javascript"></script>
+
+    <!--
+    <script type="text/javascript">
+        function addDifficulty(dif){
+            document.getElementById("game-difficulty").innerHTML = dif;
+        }
+    </script>
+    -->
 </body>
 </html>

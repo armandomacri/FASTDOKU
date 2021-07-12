@@ -20,7 +20,7 @@ public class LogOutServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-
+        response.sendRedirect("index.jsp");
         request.getRequestDispatcher("index.jsp").include(request, response);
         HttpSession session = request.getSession();
         session.invalidate();

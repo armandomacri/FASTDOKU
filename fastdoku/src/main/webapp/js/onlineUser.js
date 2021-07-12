@@ -20,25 +20,25 @@ function showDialogClick(dialogId, opponent) {
 function startGameButtonClick() {
     var difficulties = document.getElementsByName('difficulty');
     // difficulty:
-    //  0 expert
-    //  1 hard
-    //  2 normal
-    //  3 easy
-    //  4 very easy
+    //  5 expert
+    //  4 hard
+    //  3 normal
+    //  2 easy
+    //  1 very easy
 
     var difficulty = false;
 
     // get difficulty value
     for (var i = 0; i < difficulties.length; i++) {
         if (difficulties[i].checked) {
-            difficulty = i;
+            difficulty = i+1;
             difficulties[i].checked = false;
             break;
         }
     }
 
     if (!difficulty){
-        alert("Select difficulty.");
+        alert("Select difficulty!");
         return ;
     }
 

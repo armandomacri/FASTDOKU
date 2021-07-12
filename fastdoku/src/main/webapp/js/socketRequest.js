@@ -10,7 +10,6 @@ class Request{
 }
 
 waitForSocketConnection(ws, registerUser);
-waitForSocketConnection(ws, addUserAmongOnlineOne);
 
 function registerUser () {
     var username = document.getElementById("loggedUsername").textContent;
@@ -37,6 +36,7 @@ ws.onmessage = function (event) {
             for(var i = 0; i < text.length; i++) {
                 ul.append(createUserLi(myUsername, text[i]));
             }
+            waitForSocketConnection(ws, addUserAmongOnlineOne);
             break;
 
         case "new_user":
@@ -45,7 +45,9 @@ ws.onmessage = function (event) {
 
         case "remove_user":
             document.getElementById(text+"_online").remove();
-            document.getElementById(text+"_request").remove();
+            if (document.getElementById(text+"_request"))
+                document.getElementById(text+"_request").remove();
+            hideDialogButtonClick('dialog');
             break;
 
         case "send_request":
@@ -62,7 +64,7 @@ ws.onmessage = function (event) {
             break;
 
         case "play_start":
-            location.href = "./sudoku.jsp?difficulty=" + diff[parseInt(text)] + "&opponent=" + sender;
+            location.href = "./sudoku.jsp?difficulty=" + diff[parseInt(text)-1] + "&opponent=" + sender;
             break;
 
         default:
@@ -119,7 +121,7 @@ function requestUserLi (mySelf, username, difficulty) {
     var div2 = document.createElement("div");
     div2.setAttribute("class","col col-2");
     div2.setAttribute("data-label", "Difficulty");
-    var difficultyText = document.createTextNode(diff[parseInt(difficulty)]);
+    var difficultyText = document.createTextNode(diff[parseInt(difficulty)-1]);
     div2.append(difficultyText);
 
     var div3 = document.createElement("div");
