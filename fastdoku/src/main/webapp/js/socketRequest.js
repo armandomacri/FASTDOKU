@@ -54,6 +54,14 @@ ws.onmessage = function (event) {
             ul1.appendChild(requestUserLi(myUsername, sender, text));
             break;
 
+        case "refuse_request":
+            var b = document.getElementById(sender+"request");
+            b.disabled = false;
+            b.textContent = "Send Request";
+            b.style.cursor = "pointer";
+            b.style.color = "green";
+            break;
+
         case "info":
             showAlert(text);
             break;
@@ -97,6 +105,7 @@ function createUserLi (mySelf, username) {
     div3.setAttribute("data-label", "Action");
     var sendRequestButton = document.createElement("Button");
     sendRequestButton.setAttribute("class", "requestButton");
+    sendRequestButton.setAttribute("id", username+"request");
     sendRequestButton.appendChild(document.createTextNode("Send Request"));
     sendRequestButton.onclick = function() {
                                             //sendRequest(mySelf, username);
@@ -107,15 +116,15 @@ function createUserLi (mySelf, username) {
     return li;
 }
 
-function requestUserLi (mySelf, username, difficulty) {
+function requestUserLi (username, sender, difficulty) {
     var li = document.createElement("li");
     li.setAttribute("class", "table-row");
-    li.setAttribute("id", username + "_request");
+    li.setAttribute("id", sender + "_request");
 
     var div1 = document.createElement("div");
     div1.setAttribute("class","col col-1");
     div1.setAttribute("data-label", "Username");
-    var usernameText = document.createTextNode(username);
+    var usernameText = document.createTextNode(sender);
     div1.append(usernameText);
 
     var div2 = document.createElement("div");
@@ -127,22 +136,35 @@ function requestUserLi (mySelf, username, difficulty) {
     var div3 = document.createElement("div");
     div3.setAttribute("class","col col-3");
     div3.setAttribute("data-label", "Action");
+
     var acceptButton = document.createElement("Button");
     acceptButton.setAttribute("class", "acceptButton");
-    acceptButton.appendChild(document.createTextNode("Accept Request"));
-    acceptButton.onclick = function() { acceptRequest(mySelf, username, difficulty); };
-    div3.append(acceptButton);
+    acceptButton.appendChild(document.createTextNode("Accept"));
+
+    var refuseButton = document.createElement("Button");
+    refuseButton.setAttribute("class", "acceptButton");
+    refuseButton.appendChild(document.createTextNode("Refuse"));
+    refuseButton.style.color = "red";
+
+    acceptButton.onclick = function () { acceptRequest(username, sender, difficulty); };
+    refuseButton.onclick = function () { refuseRequest(username, sender); };
+    div3.append(acceptButton, refuseButton);
     li.append(div1, div2, div3);
     return li;
 }
 
 function sendRequest (mySelf, username, difficulty) {
     sendWebSocket(JSON.stringify(new Request(mySelf, username, "send_request", difficulty)));
-
 }
 
-function acceptRequest(mySelf, username, difficulty){
-    sendWebSocket(JSON.stringify(new Request(mySelf, username, "play_start", difficulty)));
+function acceptRequest(username, sender, difficulty){
+    sendWebSocket(JSON.stringify(new Request(username, sender, "play_start", difficulty)));
+}
+
+function refuseRequest(username, sender){
+    sendWebSocket(JSON.stringify(new Request(username, sender, "refuse_request", "")));
+    if (document.getElementById(sender+"_request"))
+        document.getElementById(sender+"_request").remove();
 }
 
 function showAlert(text){

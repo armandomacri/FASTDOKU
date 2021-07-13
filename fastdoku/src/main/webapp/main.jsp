@@ -37,7 +37,18 @@
                         <span style="margin-left: 5px"><%out.print(user.getPoints());%></span>
                     </div>
                 </li>
-                <li class="log-out"><a href="logout-servlet" class="menu-item">Log out</a></li>
+                <li>
+                    <div class="menu-item select">
+                        <span class="material-icons">delete</span>
+                        <a href="delete-servlet" class="menu-item" style="margin-left: 5px">Delete</a>
+                    </div>
+                </li>
+                <li class="log-out">
+                    <div class="menu-item select">
+                        <span class="material-icons">logout</span>
+                        <a href="logout-servlet" class="menu-item" style="margin-left: 5px">Log out</a>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>

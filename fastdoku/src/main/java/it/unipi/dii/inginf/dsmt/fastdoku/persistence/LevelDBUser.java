@@ -7,6 +7,9 @@ import org.iq80.leveldb.WriteBatch;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import static org.iq80.leveldb.impl.Iq80DBFactory.*;
 import static org.iq80.leveldb.impl.Iq80DBFactory.bytes;
 
@@ -16,8 +19,6 @@ import static org.iq80.leveldb.impl.Iq80DBFactory.bytes;
  */
 public class LevelDBUser implements AutoCloseable {
     private static String DB_PATH; //usare parametri configurazione
-
-
     private static volatile LevelDBUser instance; //Singleton instance
     private DB db;
 
@@ -140,6 +141,19 @@ public class LevelDBUser implements AutoCloseable {
         }
     }
 
+    public void deleteUser(final String username){
+        WriteBatch batch = db.createWriteBatch();
+        try {
+            batch.delete(bytes("user:" + username + ":password"));
+            batch.delete(bytes("user:" + username + ":points"));
+            batch.delete(bytes("user:" + username + ":daylypoints"));
+            db.write(batch);
+            batch.close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
     public void updateScore (final String username, final int points) {
         putValue("user:" + username + ":points", Integer.toString(points));
     }
@@ -153,6 +167,7 @@ public class LevelDBUser implements AutoCloseable {
         putValue("user:"+username+":daylypoints", Integer.toString(points));
     }
 
+    @Override
     public void close(){
         this.closeDB();
     }

@@ -26,12 +26,12 @@
             <!-- SignUp Form -->
             <form action="access-servlet" class="formStyle" method="post">
                 <label for="username"></label><input type="text" id="username" class="fadeIn second" placeholder="Enter Username" name="username" required>
-                <label for="password"></label><input type="text" id="password" class="fadeIn third" placeholder="Enter Password" name="password" required>
-                <label for="repeatpassword"></label><input type="text" id="repeatpassword" class="fadeIn third" placeholder="Repeat Password" name="repeatpassword" required>
+                <label for="password"></label><input type="password" id="password" class="fadeIn third" placeholder="Enter Password" name="password" required>
+                <label for="repeatpassword"></label><input type="password" id="repeatpassword" class="fadeIn third" placeholder="Repeat Password" name="repeatpassword" required>
                 <input type="submit" class="fadeIn fourth" name="signUp" value="signUp">
             </form>
             <div id="formFooter">
-                <a class="underlineHover" href="index.jsp">Sign In</a>
+                <a class="underlineHover" href="index.jsp">Log In</a>
             </div>
         </div>
     </div>

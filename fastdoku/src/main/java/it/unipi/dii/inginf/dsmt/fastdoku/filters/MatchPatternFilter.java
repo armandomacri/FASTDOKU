@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
 /**
@@ -56,6 +58,7 @@ public class MatchPatternFilter implements Filter {
                 out.println("document.location.href='./signUp.jsp';");
                 out.println("</script>");
             } else {
+                request.setAttribute("password", encryptPassword(password));
                 chain.doFilter(req, resp);
             }
         } else if(request.getParameter("logIn") == null) {
@@ -64,10 +67,37 @@ public class MatchPatternFilter implements Filter {
             out.println("document.location.href='./index.jsp';");
             out.println("</script>");
         }else {
+            request.setAttribute("password", encryptPassword(password));
             chain.doFilter(req, resp);
         }
 
         out.close();
+    }
+
+    //https://howtodoinjava.com/java/java-security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
+    private String encryptPassword(String passwordToHash){
+        String generatedPassword = null;
+        try {
+            // Create MessageDigest instance for MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            //Add password bytes to digest
+            md.update(passwordToHash.getBytes());
+            //Get the hash's bytes
+            byte[] bytes = md.digest();
+            //This bytes[] has bytes in decimal format;
+            //Convert it to hexadecimal format
+            StringBuilder sb = new StringBuilder();
+            for (byte aByte : bytes) {
+                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            }
+            //Get complete hashed password in hex format
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException nsae) {
+            nsae.printStackTrace();
+        }
+
+        return generatedPassword;
     }
 
     public void destroy() {

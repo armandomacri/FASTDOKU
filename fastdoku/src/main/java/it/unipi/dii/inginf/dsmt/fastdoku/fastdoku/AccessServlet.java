@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @WebServlet(name = "accessServlet", value = "/access-servlet")
 public class AccessServlet extends HttpServlet {
@@ -39,8 +41,12 @@ public class AccessServlet extends HttpServlet {
                 goToPage("main.jsp", request, response);
             }
             else {
-                session.setAttribute("error", "Username or password wrong");
-                goToPage("index.jsp", request, response);
+                PrintWriter out = response.getWriter();
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Something wrong. Check if your username and password are correct!');");
+                out.println("document.location.href='./index.jsp';");
+                out.println("</script>");
+                out.close();
             }
         }
         else { // If the user has required a register operation
