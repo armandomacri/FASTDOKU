@@ -4,6 +4,7 @@ public class User {
     private String username; // identifier
     private int points;
     private String password;
+    private int lastchallange;
 
     /**
      * Constructor log in phase
@@ -16,7 +17,10 @@ public class User {
         this.password = password;
         this.points = points;
     }
-
+    public User (final String username,  final int lastchallange) {
+        this.username = username;
+        this.lastchallange = lastchallange;
+    }
     /**
      * Constructor sign up phase
      * @param username

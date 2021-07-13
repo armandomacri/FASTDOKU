@@ -1,15 +1,21 @@
 package it.unipi.dii.inginf.dsmt.fastdoku.persistence;
 
+import it.unipi.dii.inginf.dsmt.fastdoku.Utils;
 import it.unipi.dii.inginf.dsmt.fastdoku.bean.User;
 import org.iq80.leveldb.DB;
+import org.iq80.leveldb.DBIterator;
 import org.iq80.leveldb.Options;
 import org.iq80.leveldb.WriteBatch;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.StreamSupport;
 
+import static java.lang.Integer.parseInt;
 import static org.iq80.leveldb.impl.Iq80DBFactory.*;
 import static org.iq80.leveldb.impl.Iq80DBFactory.bytes;
 
@@ -19,6 +25,8 @@ import static org.iq80.leveldb.impl.Iq80DBFactory.bytes;
  */
 public class LevelDBUser implements AutoCloseable {
     private static String DB_PATH; //usare parametri configurazione
+
+
     private static volatile LevelDBUser instance; //Singleton instance
     private DB db;
 
@@ -44,6 +52,8 @@ public class LevelDBUser implements AutoCloseable {
         }
         return instance;
     }
+
+
 
     /**
      * open the connection with LevelDB
@@ -105,7 +115,7 @@ public class LevelDBUser implements AutoCloseable {
         }
         // If this user is present in the DB
         if (password != null)
-            user = new User(username, password, Integer.parseInt(points));
+            user = new User(username, password, parseInt(points));
         return user;
     }
 
@@ -141,23 +151,63 @@ public class LevelDBUser implements AutoCloseable {
         }
     }
 
-    public void deleteUser(final String username){
-        WriteBatch batch = db.createWriteBatch();
-        try {
-            batch.delete(bytes("user:" + username + ":password"));
-            batch.delete(bytes("user:" + username + ":points"));
-            batch.delete(bytes("user:" + username + ":daylypoints"));
-            db.write(batch);
-            batch.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
     public void updateScore (final String username, final int points) {
         putValue("user:" + username + ":points", Integer.toString(points));
     }
 
+
+
+    public void close(){
+        this.closeDB();
+    }
+
+
+
+    /**
+     *
+     *R-Function that returns the rank for the user passed ad parameter
+     * R- User id user to get the ranking of
+     * @param limit number of records to be returned
+     * @return a sorted HashMap where the key is the username and the value is rank
+     */
+
+    public HashMap<String, Integer> getRanking( int limit, String type) {
+
+        HashMap<String, Integer> userRank = new HashMap<>();
+
+        //Iterate DB Content
+        try (DBIterator iterator = db.iterator()) {
+            StreamSupport.stream(
+                    Spliterators.spliteratorUnknownSize(iterator, Spliterator.NONNULL), false) //NONNULL: the entry are all non-null
+                    .parallel() // Parallel computation
+                    .forEach(entry -> {
+                        String key = asString(entry.getKey());
+                        // Check if it is the game wins record
+                        // user:'username':'game'Wins" -> parts[1] = username
+                        if (key.contains(type)) {
+                            String userWins = asString(entry.getValue());
+
+                            // user:'username':'game'Wins" -> parts[1] = username
+                            //user:'username': rank
+                            String[] parts = key.split(":");
+                            final String username = parts[1];
+
+                            userRank.put(username, parseInt(userWins));
+                            if(type.equals("dailypoints")){
+                            deleteValue("user:" + key + ":dailypoints");
+                        }
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Utils.sortHashMap(userRank, limit);
+    }
+
+    public void writeRank (String rank, String type){
+        putValue("rank:" + type, rank);
+    }
     public int getDaylyScore(final String username){
         String p = getValue("user:"+username+":daylypoints");
         return p != null ? Integer.parseInt(p) : 0;
@@ -166,10 +216,4 @@ public class LevelDBUser implements AutoCloseable {
     public void setDaylyScore(final String username, final int points){
         putValue("user:"+username+":daylypoints", Integer.toString(points));
     }
-
-    @Override
-    public void close(){
-        this.closeDB();
-    }
-
 }

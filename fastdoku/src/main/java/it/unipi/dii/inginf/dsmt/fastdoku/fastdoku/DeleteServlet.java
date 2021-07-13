@@ -27,7 +27,7 @@ public class DeleteServlet extends HttpServlet {
         response.setContentType("text/html");
         LevelDBUser levelDBUser = LevelDBUser.getInstance();
         HttpSession session = request.getSession();
-        levelDBUser.deleteUser(((User)session.getAttribute("loggedUser")).getUsername());
+    //    levelDBUser.deleteUser(((User)session.getAttribute("loggedUser")).getUsername());
         PrintWriter out = response.getWriter();
         out.println("<script type=\"text/javascript\">");
         out.println("alert('User delete!');");
