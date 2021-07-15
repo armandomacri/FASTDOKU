@@ -1,4 +1,7 @@
-<%@ page import="it.unipi.dii.inginf.dsmt.fastdoku.bean.User" %><%--
+<%@ page import="it.unipi.dii.inginf.dsmt.fastdoku.bean.User" %>
+<%@ page import="it.unipi.dii.inginf.dsmt.fastdoku.persistence.LevelDBUser" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: arman
   Date: 08/02/2021
@@ -11,7 +14,6 @@
     <title>Main Page</title>
     <link href="css/onlineuser.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <link href="css/alert.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
@@ -19,7 +21,11 @@
 
     <script src="js/webSocket.js" type="text/javascript"></script>
     <script src="js/onlineUser.js" type="text/javascript"></script>
-    <%User user = (User)session.getAttribute("loggedUser");%>
+    <%
+        User user = (User)session.getAttribute("loggedUser");
+        LevelDBUser levelDBUser = LevelDBUser.getInstance();
+        Map<String, Integer> bestplayers = levelDBUser.getRanking(3);
+    %>
     <!-- Navigation -->
     <header class="header">
         <div class="logo"><span>FASTDOKU</span></div>
@@ -52,6 +58,19 @@
             </ul>
         </nav>
     </header>
+
+    <div id="rank-container">
+        <div class="rank">
+            <h1>Best Players</h1>
+            <ol class="rectangle-list">
+                <%
+                    for (String username : bestplayers.keySet()) {
+                        out.print("<li><span>"+username+"<small>"+bestplayers.get(username)+"</small></span> </li>");
+                    }
+                %>
+            </ol>
+        </div>
+    </div>
 
     <div style="display: inline-flex; width: 100%">
         <div class="box">

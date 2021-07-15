@@ -238,3 +238,80 @@ h2 small {
     overflow: hidden;
     cursor: pointer;
 }
+
+/**********RANK**********/
+
+#rank-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#rank-container h1{
+    font-size: 18px;
+    padding: 12px 13px 18px;
+    text-align: center;
+}
+
+.rank {
+    position: relative;
+    width: 40%;
+}
+
+.rectangle-list {
+    counter-reset: li; /* Initiate a counter */
+    list-style: none; /* Remove default numbering */
+    *list-style: decimal; /* Keep using default numbering for IE6/7 */
+    padding: 0;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.rectangle-list span{
+    position: relative;
+    display: block;
+    padding: 18px 10px 18px 50px;
+    margin: .5em 1em .5em 6em;
+    background: #ddd;
+    color: #444;
+    text-decoration: none;
+    transition: all .3s ease-out;
+}
+
+.rectangle-list span:hover{
+    background: #eee;
+}
+
+.rectangle-list span:before{
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: -5em;
+    top: 50%;
+    color: white;
+    margin-top: -1.5em;
+    background: #56baed;
+    height: 3em;
+    width: 3em;
+    line-height: 3em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.rectangle-list span:after{
+    position: absolute;
+    content: '';
+    border: .5em solid transparent;
+    left: -1em;
+    top: 50%;
+    margin-top: -.5em;
+    transition: all .3s ease-out;
+}
+
+.rectangle-list span:hover:after{
+    left: -.5em;
+    border-left-color: #56baed;
+}
+
+.rectangle-list small {
+    margin-left: 7em;
+}

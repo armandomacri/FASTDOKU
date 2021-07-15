@@ -9,10 +9,7 @@ import org.iq80.leveldb.WriteBatch;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.stream.StreamSupport;
 
 import static java.lang.Integer.parseInt;
@@ -25,10 +22,8 @@ import static org.iq80.leveldb.impl.Iq80DBFactory.bytes;
  */
 public class LevelDBUser implements AutoCloseable {
     private static String DB_PATH; //usare parametri configurazione
-
-
     private static volatile LevelDBUser instance; //Singleton instance
-    private DB db;
+    private static DB db;
 
     /**
      * Private constructor
@@ -155,13 +150,14 @@ public class LevelDBUser implements AutoCloseable {
         putValue("user:" + username + ":points", Integer.toString(points));
     }
 
-
-
-    public void close(){
-        this.closeDB();
+    public int getDailyScore(final String username){
+        String p = getValue("user:"+username+":dailypoints");
+        return p != null ? Integer.parseInt(p) : 0;
     }
 
-
+    public void setDailyScore(final String username, final int points){
+        putValue("user:"+username+":dailypoints", Integer.toString(points));
+    }
 
     /**
      *
@@ -171,7 +167,7 @@ public class LevelDBUser implements AutoCloseable {
      * @return a sorted HashMap where the key is the username and the value is rank
      */
 
-    public HashMap<String, Integer> getRanking( int limit, String type) {
+    public HashMap<String, Integer> getRanking(int limit) {
 
         HashMap<String, Integer> userRank = new HashMap<>();
 
@@ -184,18 +180,14 @@ public class LevelDBUser implements AutoCloseable {
                         String key = asString(entry.getKey());
                         // Check if it is the game wins record
                         // user:'username':'game'Wins" -> parts[1] = username
-                        if (key.contains(type)) {
+                        System.out.println(key);
+                        if (key.contains("points")) {
                             String userWins = asString(entry.getValue());
-
                             // user:'username':'game'Wins" -> parts[1] = username
                             //user:'username': rank
                             String[] parts = key.split(":");
                             final String username = parts[1];
-
                             userRank.put(username, parseInt(userWins));
-                            if(type.equals("dailypoints")){
-                            deleteValue("user:" + key + ":dailypoints");
-                        }
                         }
                     });
         } catch (IOException e) {
@@ -205,15 +197,8 @@ public class LevelDBUser implements AutoCloseable {
         return Utils.sortHashMap(userRank, limit);
     }
 
-    public void writeRank (String rank, String type){
-        putValue("rank:" + type, rank);
-    }
-    public int getDaylyScore(final String username){
-        String p = getValue("user:"+username+":daylypoints");
-        return p != null ? Integer.parseInt(p) : 0;
+    public void close(){
+        this.closeDB();
     }
 
-    public void setDaylyScore(final String username, final int points){
-        putValue("user:"+username+":daylypoints", Integer.toString(points));
-    }
 }

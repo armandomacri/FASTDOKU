@@ -1,11 +1,13 @@
 package it.unipi.dii.inginf.dsmt.fastdoku;
 
 import java.util.*;
+
 public class Utils {
-    //funzione che sort un hashmap presa da gameon, da modificare
+
+
     public static HashMap<String, Integer> sortHashMap(HashMap<String, Integer> hashMap, int limit) {
-        if (hashMap == null)
-        {
+
+        if (hashMap == null) {
             return null;
         }
 

@@ -37,8 +37,8 @@ public class UpdatePointsServlet extends HttpServlet {
         session.setAttribute("earnedPoints", points);
 
         //for the ranking
-        int dailyPoints = levelDBUser.getDaylyScore(user.getUsername()) + points;
-        levelDBUser.setDaylyScore(user.getUsername(), dailyPoints);
+        int dailyPoints = levelDBUser.getDailyScore(user.getUsername()) + points;
+        levelDBUser.setDailyScore(user.getUsername(), dailyPoints);
         /*-------------------------------------------------------------------*/
 
         response.sendRedirect("main.jsp");

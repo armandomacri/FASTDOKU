@@ -40,10 +40,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\''+
-                ", score='" + points + '}';
+        return "User{\n" +
+                "\tusername='" + username + "'\n" +
+                "\tpassword='" + password + '\n'+
+                "\tscore='" + points + "'\n }";
     }
 
 }
