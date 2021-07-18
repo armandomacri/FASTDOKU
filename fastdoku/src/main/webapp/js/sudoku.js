@@ -668,8 +668,9 @@ function checkButtonClick() {
                     points = 1;
                 }
 
-                sendWebSocket(JSON.stringify(new Request(username, opponent, "win", points)));
                 location.href = "./update-servlet?points="+points;
+                sendWebSocket(JSON.stringify(new Request(username, opponent, "win", points)));
+
             } else {
                 pauseTimer = true;
                 document.getElementById("game-difficulty").innerText = "Solved";

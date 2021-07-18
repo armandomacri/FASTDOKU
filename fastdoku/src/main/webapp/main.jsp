@@ -17,7 +17,7 @@
     <link href="css/alert.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="images/sudoku.png"/>
 </head>
-<body onload="showPoints(<%out.println(session.getAttribute("earnedPoints"));%>)">
+<body onload="showPoints(<%out.println(session.getAttribute("earnedPoints")); session.removeAttribute("earnedPoints");%>)">
 
     <script src="js/webSocket.js" type="text/javascript"></script>
     <script src="js/onlineUser.js" type="text/javascript"></script>
