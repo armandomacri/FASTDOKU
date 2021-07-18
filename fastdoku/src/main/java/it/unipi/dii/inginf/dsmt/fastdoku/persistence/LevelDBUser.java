@@ -21,7 +21,7 @@ import static org.iq80.leveldb.impl.Iq80DBFactory.bytes;
  * Pattern of the keys: user:username:field
  */
 public class LevelDBUser implements AutoCloseable {
-    private static String DB_PATH; //usare parametri configurazione
+    private static String DB_PATH; //database name psth
     private static volatile LevelDBUser instance; //Singleton instance
     private static DB db;
 

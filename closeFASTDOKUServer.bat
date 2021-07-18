@@ -1,0 +1,1 @@
+start cmd.exe /c "cd C:\apache-tomcat-8.5.61\bin && call shutdown.bat"
